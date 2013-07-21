@@ -1,0 +1,26 @@
+This is a list of things I wanted to write down before I check box on the agreement on the LEAP SDK to ensure that I can develop
+software for other 3D input applications.
+
+Given some point cloud, fingers or other pointing devices can be determined by some best fit cylinder or protrusion, or possibly recognized by a neural net.
+
+Multiple pointing things could be detected. The shape of each could be used to guess as to what it is, which finger, etc.
+
+Multiple fingers could be detected at same time, improving the accuracy of the guess as to which finger each is.
+
+This data could be relayed to the user through point cloud, or bones, or some other method.
+Bones (as in 3D animation) could be represenative of the actual bones in the fingers.
+The palm could be represented as a point or disk, with direction indicating palm.
+
+Events could be generated for all this, as well as things like:
+	Certian gestures
+	Pointer crossing a boundry, or entering an area
+	Speed
+	Pointer entering or leaving detection area
+
+Detection/computation could also be scaled, etc, for greater accuracy. 
+
+Could report both relative and aboslute movements
+
+Could report pixel changes, as if pointing at screen. (take line from pointer to virtual screen, possibly representing real screen) (also, calibrate)
+	Could match up so exactly matches screen
+Could use other cameras (or not), report if a pointer is pointing at or touching another object
