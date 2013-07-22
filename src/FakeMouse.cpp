@@ -40,6 +40,14 @@ void FakeMouse::get(int &x, int &y) {
 					&mask);
 }
 
+int FakeMouse::getScreenHeight() {
+	return XDisplayHeight(display, 0);
+}
+
+int FakeMouse::getScreenWidth() {
+	return XDisplayWidth(display, 0);
+}
+
 void FakeMouse::lClick() {
 	XTestFakeButtonEvent(display, 1, True, CurrentTime);
 	XTestFakeButtonEvent(display, 1, False, CurrentTime);
@@ -49,3 +57,4 @@ void FakeMouse::rClick() {
 	XTestFakeButtonEvent(display, 3, True, CurrentTime);
 	XTestFakeButtonEvent(display, 3, False, CurrentTime);
 }
+

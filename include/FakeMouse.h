@@ -14,6 +14,8 @@ public:
 	void set(int x, int y);
 	void move(int x, int y);
 	void get(int &x, int &y);
+	int getScreenHeight();
+	int getScreenWidth();
 	void lClick();
 	void rClick();
 private:

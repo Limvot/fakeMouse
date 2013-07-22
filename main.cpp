@@ -4,8 +4,50 @@
 //#include <istream>
 #include <string>
 
+#include "Leap.h"
+
+#include <time.h>
+
 int main() {
 	FakeMouse mouse;
+
+	Leap::Controller controller;
+
+	int screenHeight = mouse.getScreenHeight();
+	int screenWidth = mouse.getScreenWidth();
+
+	while (true) {
+		while (controller.isConnected()) {
+			std::cout << "Controller is connected!" << std::endl;
+			Leap::Frame frame = controller.frame();
+			std::cout 	<< "Frame id: " << frame.id()
+						<< ", timestamp: " << frame.timestamp()
+						<< ", hands: " << frame.hands().count()
+						<< ", fingers: " << frame.fingers().count()
+						<< ", tools: " << frame.tools().count() << std::endl;
+			//Leap::HandList hands = frame.hands();
+			Leap::PointableList pointables = frame.pointables();
+			//Leap::FingerList fingers = frame.fingers();
+			//Leap::ToolList tools = frame.tools();
+
+			Leap::Pointable pointer = pointables.frontmost();
+			Leap::Vector stabilizedPosition = pointer.stabilizedTipPosition();
+
+			Leap::InteractionBox box = frame.interactionBox();
+			Leap::Vector normalizedPosition = box.normalizePoint(stabilizedPosition);
+
+			int x = (int) (normalizedPosition.x * screenWidth);
+			int y = (int) (screenHeight - normalizedPosition.y * screenHeight);
+			mouse.set(x,y);
+		}
+		timespec sleepTime;
+		sleepTime.tv_sec = 1;
+		sleepTime.tv_nsec = 0;
+		nanosleep(&sleepTime, &sleepTime);
+		std::cout << "Controller is not connected." << std::endl;
+	}
+
+/*
 	std::string input = "";
 	while (input != "quit") {
 		std::cin >> input;
@@ -50,5 +92,7 @@ int main() {
 		else
 			std::cout << "No input" << std::endl;
 	}
+	*/
 	return 0;
 }
+
