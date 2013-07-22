@@ -17,14 +17,50 @@ int main() {
 	int screenWidth = mouse.getScreenWidth();
 
 	while (true) {
+		bool newConnection = true;
 		while (controller.isConnected()) {
-			std::cout << "Controller is connected!" << std::endl;
+			if (newConnection) {
+				std::cout << "Controller is connected!" << std::endl;
+				controller.enableGesture(Leap::Gesture::TYPE_SCREEN_TAP);
+				newConnection = false;
+			}
 			Leap::Frame frame = controller.frame();
 			std::cout 	<< "Frame id: " << frame.id()
 						<< ", timestamp: " << frame.timestamp()
 						<< ", hands: " << frame.hands().count()
 						<< ", fingers: " << frame.fingers().count()
 						<< ", tools: " << frame.tools().count() << std::endl;
+
+			Leap::GestureList gestures = frame.gestures();
+			for (int i = 0; i < gestures.count(); i++) {
+				Leap::Gesture gesture = gestures[i];
+				switch (gesture.type()) {
+					case Leap::Gesture::TYPE_SCREEN_TAP:
+					{
+						Leap::ScreenTapGesture screentap = gesture;
+						std::cout	<< "Screen Tap id: " << gesture.id()
+									<< ", state: " << gesture.state()
+									<< ", position: " << screentap.position()
+									<< ", direction: " << screentap.direction() << std::endl;
+						mouse.lClick();
+					}
+					break;
+
+					case Leap::Gesture::TYPE_KEY_TAP:
+					{
+						Leap::KeyTapGesture keytap = gesture;
+						std::cout	<< "Key Tap id: " << gesture.id()
+									<< ", state: " << gesture.state()
+									<< ", position: " << keytap.position()
+									<< ", direction: " << keytap.direction() << std::endl;
+						mouse.rClick();
+					}
+					default:
+						std::cout << "Unsupported gesture type." << std::endl;
+				}
+			}
+
+
 			//Leap::HandList hands = frame.hands();
 			Leap::PointableList pointables = frame.pointables();
 			//Leap::FingerList fingers = frame.fingers();
