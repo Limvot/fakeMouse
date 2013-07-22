@@ -25,11 +25,11 @@ int main() {
 				newConnection = false;
 			}
 			Leap::Frame frame = controller.frame();
-			std::cout 	<< "Frame id: " << frame.id()
-						<< ", timestamp: " << frame.timestamp()
-						<< ", hands: " << frame.hands().count()
-						<< ", fingers: " << frame.fingers().count()
-						<< ", tools: " << frame.tools().count() << std::endl;
+			// std::cout 	<< "Frame id: " << frame.id()
+			// 			<< ", timestamp: " << frame.timestamp()
+			// 			<< ", hands: " << frame.hands().count()
+			// 			<< ", fingers: " << frame.fingers().count()
+			// 			<< ", tools: " << frame.tools().count() << std::endl;
 
 			Leap::GestureList gestures = frame.gestures();
 			for (int i = 0; i < gestures.count(); i++) {
@@ -58,6 +58,7 @@ int main() {
 					default:
 						std::cout << "Unsupported gesture type." << std::endl;
 				}
+
 			}
 
 
@@ -75,6 +76,11 @@ int main() {
 			int x = (int) (normalizedPosition.x * screenWidth);
 			int y = (int) (screenHeight - normalizedPosition.y * screenHeight);
 			mouse.set(x,y);
+
+			timespec sleepTime;
+			sleepTime.tv_sec = 0;
+			sleepTime.tv_nsec = 10;
+			nanosleep(&sleepTime, &sleepTime);
 		}
 		timespec sleepTime;
 		sleepTime.tv_sec = 1;

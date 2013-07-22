@@ -1,8 +1,8 @@
 cmake_minimum_required (VERSION 2.6)
 
 # find_package (LEAP)
-set(LIBLEAP_INCLUDE_DIRS "/home/nathan/Leap_Developer_Kit_0.8.0_5302_Linux/LeapSDK/include")
-set(LIBLEAP_LIBRARIES "/home/nathan/Leap_Developer_Kit_0.8.0_5302_Linux/LeapSDK/lib/x64/libLeap.so")
+set(LIBLEAP_INCLUDE_DIRS "/home/nathan/Leap_Developer_Kit_0.8.0_5300_Linux/LeapSDK/include")
+set(LIBLEAP_LIBRARIES "/home/nathan/Leap_Developer_Kit_0.8.0_5300_Linux/LeapSDK/lib/x64/libLeap.so")
 
 project(FakeMouse)
 
