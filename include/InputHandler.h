@@ -20,5 +20,6 @@ class InputHandler : public Leap::Listener {
 		void update(Leap::Frame frame);
 	private:
 		FakeMouse mouse;
+		bool lClickDown;
 		int screenWidth, screenHeight;
 };

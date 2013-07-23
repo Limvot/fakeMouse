@@ -17,6 +17,8 @@ public:
 	int getScreenHeight();
 	int getScreenWidth();
 	void lClick();
+	void lPress();
+	void lRelease();
 	void rClick();
 private:
 	int screen, root, rootX, rootY;

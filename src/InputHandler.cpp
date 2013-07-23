@@ -1,7 +1,7 @@
 #include <InputHandler.h>
 
 InputHandler::InputHandler() {
-	//No Setup
+	lClickDown = false;
 }
 
 InputHandler::~InputHandler() {
@@ -70,12 +70,25 @@ void InputHandler::update(Leap::Frame frame) {
 				std::cout << "Unsupported gesture type." << std::endl;
 		}
 	}
-	//Handle pointing
-	//Leap::HandList hands = frame.hands();
+	//Testing for click
 	Leap::PointableList pointables = frame.pointables();
-	//Leap::FingerList fingers = frame.fingers();
-	//Leap::ToolList tools = frame.tools();
 	Leap::Pointable pointer = pointables.frontmost();
+	if (frame.fingers().leftmost() == pointer) {
+		if (!lClickDown) {
+			//Do press
+			std::cout << "lClick down!" << std::endl;
+			mouse.lPress();
+			lClickDown = true;
+		}
+	} else {
+		if (lClickDown) {
+			//stop click
+			std::cout << "lClick released." << std::endl;
+			mouse.lRelease();
+			lClickDown = false;
+		}
+	}
+	//Handle pointing
 	Leap::Vector stabilizedPosition = pointer.stabilizedTipPosition();
 	Leap::InteractionBox box = frame.interactionBox();
 	Leap::Vector normalizedPosition = box.normalizePoint(stabilizedPosition);

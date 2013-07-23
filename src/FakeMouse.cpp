@@ -53,6 +53,14 @@ void FakeMouse::lClick() {
 	XTestFakeButtonEvent(display, 1, False, CurrentTime);
 }
 
+void FakeMouse::lPress() {
+	XTestFakeButtonEvent(display, 1, True, CurrentTime);
+}
+
+void FakeMouse::lRelease() {
+	XTestFakeButtonEvent(display, 1, False, CurrentTime);
+}
+
 void FakeMouse::rClick() {
 	XTestFakeButtonEvent(display, 3, True, CurrentTime);
 	XTestFakeButtonEvent(display, 3, False, CurrentTime);
