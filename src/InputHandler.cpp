@@ -2,6 +2,7 @@
 
 InputHandler::InputHandler() {
 	lClickDown = false;
+	newSweptAngle = 0;
 }
 
 InputHandler::~InputHandler() {
@@ -59,14 +60,21 @@ void InputHandler::update(Leap::Frame frame) {
 			case Leap::Gesture::TYPE_CIRCLE:
 			{
 				Leap::CircleGesture circle = gesture;
-				//If clockwise
-				if (circle.pointable().direction().angleTo(circle.normal()) <= Leap::PI/4) {
-					std::cout << "Circle Gesture clockwise" << std::endl;
-					mouse.scrollUp();
-				} else {
-					std::cout << "Circle Gesture counter-clockwise" << std::endl;
-					mouse.scrollDown();	
+				if (circle.state() != Leap::Gesture::STATE_START) {
+					newSweptAngle += circle.progress() * 2 * Leap::PI;
+					//If we've made enough progress
+					if (newSweptAngle > Leap::PI*8 || newSweptAngle < -Leap::PI*8) {
+						//If clockwise
+						if (circle.pointable().direction().angleTo(circle.normal()) <= Leap::PI/4) {
+							mouse.scrollUp();
+						} else {
+							mouse.scrollDown();	
+						}
+						newSweptAngle = 0;
+					}
 				}
+				std::cout << "Current swept angle is " << newSweptAngle << std::endl;
+
 			}
 			break;
 			case Leap::Gesture::TYPE_SWIPE:

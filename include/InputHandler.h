@@ -22,4 +22,5 @@ class InputHandler : public Leap::Listener {
 		FakeMouse mouse;
 		bool lClickDown;
 		int screenWidth, screenHeight;
+		float newSweptAngle;
 };
