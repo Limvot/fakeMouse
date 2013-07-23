@@ -90,6 +90,9 @@ void InputHandler::update(Leap::Frame frame) {
 	Leap::PointableList pointables = frame.pointables();
 	Leap::Pointable pointer = pointables.frontmost();
 	Leap::FingerList handFingers = frame.hands()[0].fingers();
+	//Don't move pointer if we have no fingers
+	if (handFingers.isEmpty())
+		return;
 	if (handFingers.frontmost() == handFingers.leftmost()) {
 		if (!lClickDown) {
 			//Do press
