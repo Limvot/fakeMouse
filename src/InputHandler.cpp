@@ -81,7 +81,8 @@ void InputHandler::update(Leap::Frame frame) {
 	//Testing for click
 	Leap::PointableList pointables = frame.pointables();
 	Leap::Pointable pointer = pointables.frontmost();
-	if (frame.fingers().leftmost() == pointer) {
+	Leap::FingerList handFingers = frame.hands()[0].fingers();
+	if (handFingers.frontmost() == handFingers.leftmost()) {
 		if (!lClickDown) {
 			//Do press
 			std::cout << "lClick down!" << std::endl;
