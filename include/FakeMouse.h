@@ -20,6 +20,8 @@ public:
 	void lPress();
 	void lRelease();
 	void rClick();
+	void scrollUp();
+	void scrollDown();
 private:
 	int screen, root, rootX, rootY;
 	Display *display;

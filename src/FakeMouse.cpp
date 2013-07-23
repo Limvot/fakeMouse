@@ -66,3 +66,13 @@ void FakeMouse::rClick() {
 	XTestFakeButtonEvent(display, 3, False, CurrentTime);
 }
 
+void FakeMouse::scrollUp() {
+	XTestFakeButtonEvent(display, 4, True, CurrentTime);
+	XTestFakeButtonEvent(display, 4, False, CurrentTime);
+}
+
+void FakeMouse::scrollDown() {
+	XTestFakeButtonEvent(display, 5, True, CurrentTime);
+	XTestFakeButtonEvent(display, 5, False, CurrentTime);
+}
+

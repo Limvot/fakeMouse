@@ -58,7 +58,15 @@ void InputHandler::update(Leap::Frame frame) {
 			break;
 			case Leap::Gesture::TYPE_CIRCLE:
 			{
-				std::cout << "Circle Gesture" << std::endl;
+				Leap::CircleGesture circle = gesture;
+				//If clockwise
+				if (circle.pointable().direction().angleTo(circle.normal()) <= Leap::PI/4) {
+					std::cout << "Circle Gesture clockwise" << std::endl;
+					mouse.scrollUp();
+				} else {
+					std::cout << "Circle Gesture counter-clockwise" << std::endl;
+					mouse.scrollDown();	
+				}
 			}
 			break;
 			case Leap::Gesture::TYPE_SWIPE:
