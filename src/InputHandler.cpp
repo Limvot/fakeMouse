@@ -1,0 +1,87 @@
+#include <InputHandler.h>
+
+InputHandler::InputHandler() {
+	//No Setup
+}
+
+InputHandler::~InputHandler() {
+	//Nothing to delete
+}
+
+void InputHandler::onInit(const Leap::Controller& controller) {
+	std::cout << "Init" << std::endl;
+	screenHeight = mouse.getScreenHeight();
+	screenWidth = mouse.getScreenWidth();
+}
+
+void InputHandler::onConnect(const Leap::Controller& controller) {
+	std::cout << "Controller Connected" << std::endl;
+	controller.enableGesture(Leap::Gesture::TYPE_SCREEN_TAP);
+	controller.enableGesture(Leap::Gesture::TYPE_KEY_TAP);
+	controller.enableGesture(Leap::Gesture::TYPE_CIRCLE);
+	controller.enableGesture(Leap::Gesture::TYPE_SWIPE);
+}
+
+void InputHandler::onDisconnect(const Leap::Controller& controller) {
+	std::cout << "Controller Disconnected" << std::endl;
+}
+
+void InputHandler::onFrame(const Leap::Controller& controller) {
+	update(controller.frame());
+}
+
+void InputHandler::update(Leap::Frame frame) {
+	//Do stuff per frame
+	Leap::GestureList gestures = frame.gestures();
+	for (int i = 0; i < gestures.count(); i++) {
+		Leap::Gesture gesture = gestures[i];
+		switch (gesture.type()) {
+			case Leap::Gesture::TYPE_SCREEN_TAP:
+			{
+				Leap::ScreenTapGesture screentap = gesture;
+				std::cout	<< "Screen Tap id: " << gesture.id()
+							<< ", state: " << gesture.state()
+							<< ", position: " << screentap.position()
+							<< ", direction: " << screentap.direction() << std::endl;
+				mouse.lClick();
+			}
+			break;
+			case Leap::Gesture::TYPE_KEY_TAP:
+			{
+				Leap::KeyTapGesture keytap = gesture;
+				std::cout	<< "Key Tap id: " << gesture.id()
+							<< ", state: " << gesture.state()
+							<< ", position: " << keytap.position()
+							<< ", direction: " << keytap.direction() << std::endl;
+				mouse.rClick();
+			}
+			break;
+			case Leap::Gesture::TYPE_CIRCLE:
+			{
+				std::cout << "Circle Gesture" << std::endl;
+			}
+			break;
+			case Leap::Gesture::TYPE_SWIPE:
+			{
+				std::cout << "Swipe Gesture" << std::endl;
+			}
+			break;
+			default:
+				std::cout << "Unsupported gesture type." << std::endl;
+		}
+	}
+	//Handle pointing
+	//Leap::HandList hands = frame.hands();
+	Leap::PointableList pointables = frame.pointables();
+	//Leap::FingerList fingers = frame.fingers();
+	//Leap::ToolList tools = frame.tools();
+	Leap::Pointable pointer = pointables.frontmost();
+	Leap::Vector stabilizedPosition = pointer.stabilizedTipPosition();
+	Leap::InteractionBox box = frame.interactionBox();
+	Leap::Vector normalizedPosition = box.normalizePoint(stabilizedPosition);
+	int x = (int) (normalizedPosition.x * screenWidth);
+	int y = (int) (screenHeight - normalizedPosition.y * screenHeight);
+	mouse.set(x,y);
+	mouse.move(0,0);
+	
+}

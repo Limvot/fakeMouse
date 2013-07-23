@@ -18,7 +18,7 @@ void FakeMouse::set(int x, int y) {
 void FakeMouse::move(int x, int y) {
 	int currX, currY;
 	get(currX, currY);
-	std::cout << "x: " << currX << " y: " << currY << std::endl;
+	// std::cout << "x: " << currX << " y: " << currY << std::endl;
 	currX += x;
 	currY += y;
 	XWarpPointer(display, None, root, 0, 0, 0, 0, currX, currY);

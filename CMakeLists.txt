@@ -10,7 +10,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
 set( MY_INCLUDES ${PROJECT_SOURCE_DIR}/include)
 
-set( MY_SOURCES main.cpp src/FakeMouse.cpp )
+set( MY_SOURCES main.cpp src/FakeMouse.cpp src/InputHandler.cpp )
 
 include_directories( ${MY_INCLUDES} ${LIBLEAP_INCLUDE_DIRS})
 
